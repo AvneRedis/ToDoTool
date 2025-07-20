@@ -17,11 +17,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Health check endpoint
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy", "message": "Notes & ToDo API is running"}
-
 # Include routers
 app.include_router(folders.router, prefix="/api/folders", tags=["folders"])
 app.include_router(notes.router, prefix="/api/notes", tags=["notes"])

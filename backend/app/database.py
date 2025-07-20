@@ -3,24 +3,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import os
 
-# Database URL - support both SQLite (dev) and PostgreSQL (prod)
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "sqlite:///./notes_todo.db"  # Default to SQLite for development
+# Database URL - using SQLite for simplicity
+SQLALCHEMY_DATABASE_URL = "sqlite:///./notes_todo.db"
+
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL, 
+    connect_args={"check_same_thread": False}  # Needed for SQLite
 )
-
-# Handle PostgreSQL URL format
-if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-
-# Create engine with appropriate settings
-if DATABASE_URL.startswith("sqlite"):
-    engine = create_engine(
-        DATABASE_URL,
-        connect_args={"check_same_thread": False}  # Only needed for SQLite
-    )
-else:
-    engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
