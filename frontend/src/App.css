@@ -1,0 +1,6 @@
+/* Custom styles for the Notes & Todo app */
+.App {
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+}
